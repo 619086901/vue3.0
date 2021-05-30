@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="../js/vue.global.js"></script>
+    <script src="../js/lodash.min.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <save-button></save-button>
+    </div>
+
+    <script>
+      const app = Vue.createApp({})
+      app.component('save-button', {
+        created() {
+          // 用 throttle 的防抖函数
+          // 节流的策略是，固定周期内，只执行一次动作，若有新事件触发，不执行
+          this.debouncedClick = _.throttle(this.click, 500)
+        },
+        unmounted() {
+          // 移除组件时，取消定时器
+          this.debouncedClick.cancel()
+        },
+        methods: {
+          click() {
+            console.log('1')
+          }
+        },
+        template: `
+  <button @click="debouncedClick">
+    Save
+  </button>
+`
+      })
+      app.mount('#app')
+    </script>
+  </body>
+</html>

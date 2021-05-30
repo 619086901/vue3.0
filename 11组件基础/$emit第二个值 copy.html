@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="../js/vue.global.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <!--model-value在组件中写成modelValue-->
+      <custom-input
+        :model-value="searchText"
+        @update:model-value="searchText = $event"
+      ></custom-input>
+    </div>
+    <script>
+      const app = Vue.createApp({
+        data() {
+          return {
+            searchText: 'fan'
+          }
+        }
+      })
+      app.component('custom-input', {
+        props: ['modelValue'],
+        emits: ['update:modelValue'],
+        template: `
+          <input
+            :value="modelValue"
+            @input="$emit('update:modelValue', $event.target.value)"
+          >
+        `
+      })
+      app.mount('#app')
+    </script>
+  </body>
+</html>

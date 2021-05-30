@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="../js/vue.global.js"></script>
+  </head>
+  <body>
+    <!--v-once只渲染一次-->
+
+    <!--v-html输入真正的HTML代码-->
+    <!--很容易收到XSS攻击-->
+    <div id="example1">
+      <p>rawHtml{{rawHtml}}</p>
+      <p>真正的html：<span v-html="rawHtml"></span></p>
+
+      <!--将元素的href与表达式url绑定-->
+      <!--静态-->
+      <a v-bind:href="url">baidu</a><br />
+      <!--动态 动态语法会将attrhref强制转化为小写-->
+      <a v-bind:[attrhref]="url">2：baidu</a>
+      <!--修饰符(.) v-on对触发的事件调用event.preventDefault()-->
+      <form v-on:submit.prevent="onSubmit">...</form>
+
+      <!--缩写-->
+      <!--v-bind-->
+      <a :href="url">v-bind缩写</a>
+      <!--v-on-->
+      <a @click>v-on缩写</a>
+    </div>
+    <script>
+      const RenderHtmlApp = {
+        data() {
+          const attrhref = 'href'
+          const url = 'http://www.baidu.com'
+          return {
+            rawHtml: '<span style="color:red">this should be red</span>',
+            url,
+            attrhref
+          }
+        }
+      }
+      Vue.createApp(RenderHtmlApp).mount('#example1')
+    </script>
+  </body>
+</html>

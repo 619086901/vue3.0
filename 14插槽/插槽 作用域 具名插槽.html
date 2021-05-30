@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="../js/vue.global.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <p>
+        父级模板里的所有内容都是在父级作用域中编译的；子模板里的所有内容都是在子作用域中编译的。
+      </p>
+      slot插槽享受data()中的作用域
+      <html-a>我是slot一号{{item.name}}</html-a>
+      <html-a>我是slot二号{{item.age}}</html-a>
+      <html-a></html-a>
+
+      <!-- #header具名插槽 -->
+      <base-layout>
+        <template #header>
+          <h1>header</h1>
+        </template>
+
+        <template v-slot:main></template>
+
+        <template v-slot:footer>
+          <p>footer</p>
+        </template>
+      </base-layout>
+    </div>
+    <script>
+      let baseLayout = {
+        template: `
+        <div class="container">
+          <header>
+            <slot name="header">我是默认值header</slot>
+          </header>
+          <main>
+            <slot name="main">我是默认值main</slot>
+          </main>
+          <footer>
+            <slot name="footer">我是默认值footer</slot>
+          </footer>
+        </div>
+        `
+      }
+      const app = Vue.createApp({
+        data() {
+          return {
+            item: {
+              name: 'fan',
+              age: 20
+            }
+          }
+        },
+        components: {
+          'base-layout': baseLayout
+        }
+      })
+      app
+        .component('html-a', {
+          template: `
+      <button class="btn-primary">
+        <slot>我是备用内容当组件标签无内容我显示</slot>
+      </button>
+      `
+        })
+        .mount('#app')
+    </script>
+  </body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="../js/vue.global.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <ul>
+        <li v-for="item in items" :key="item.id">
+          <span> {{item.message}}</span>
+        </li>
+      </ul>
+    </div>
+    <script>
+      const app = Vue.createApp({
+        data() {
+          return {
+            items: [
+              {
+                message: 'a'
+              },
+              {
+                message: 'b'
+              }
+            ]
+          }
+        }
+      }).mount('#app')
+
+      app.items.push({
+        message: 3 //添加
+      })
+      app.items.pop() //删除最后一个元素
+      app.items.shift() //删除第一个元素
+      app.items.unshift(
+        //一个或多个元素添加到数组的开头
+        {
+          message: 'c'
+        },
+        {
+          message: 'd'
+        }
+      )
+      app.items.splice(1, 1, {
+        //从第一位开始删除一个元素
+        message: '我是删掉后加进来的'
+      })
+      //app.items.sort() //排序，不过这里没效果
+      //现在c b
+      app.items.reverse() //数组中元素的位置颠倒
+      //reverse后变成b c
+    </script>
+  </body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="../js/vue.global.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <!--传递父组件 props通信-->
+      <html-a v-bind:father-message="message1"></html-a>
+      <!--继承-->
+      <date-picker @change="showChange"></date-picker>
+    </div>
+
+    <script>
+      //定义局部组件
+      const htmlA = {
+        data() {
+          return {
+            message: '我是子',
+            erfathermessage: this.fatherMessage
+          }
+        },
+        //props用驼峰命名法
+        props: ['fatherMessage'],
+        //props: { fatherMessage: [String,Number] },
+        //使用默认值就把v-bind:father-message给去掉
+        // props: {
+        //   fatherMessage: {
+        //     type: [String, Number],
+        //     default: '默认值'
+        //   }
+        // },
+        template: `
+            <div>{{fatherMessage}}</div>
+            <div>{{message}}</div>
+            <div>{{erfathermessage}}</div>
+            <button v-on:click="fatherMessage='haha'">子组件改不了父组件,console查看是只读属性</button>
+            <br><button v-on:click="erfathermessage='haha'">子组件自己定义的(值是父组件的)erfathermessage</button>
+            `
+      }
+      const app = Vue.createApp({
+        data() {
+          return {
+            message1: '我是父'
+          }
+        },
+        methods: {
+          showChange(event) {
+            console.log(event.target.value) // 将记录所选选项的值
+          }
+        },
+
+        //添加一个局部组件
+        components: {
+          'html-a': htmlA
+        }
+      })
+
+      app.component('date-picker', {
+        inheritAttrs: false, //false禁用继承
+        template: `
+          <select >
+            <option value="1">Yesterday</option>
+            <option value="2">Today</option>
+            <option value="3">Tomorrow</option>
+          </select>
+        `
+      })
+
+      app.mount('#app')
+    </script>
+  </body>
+</html>

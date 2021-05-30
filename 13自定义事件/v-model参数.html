@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="../js/vue.global.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <!-- <input v-model="searchText" />
+      等价于
+      <input :value="searchText" @input="searchText = $event.target.value" /> -->
+
+      <!--传递父组件 props通信-->
+      <html-a v-model:father-message="message1"></html-a>
+    </div>
+    <script>
+      //定义局部组件
+      const htmlA = {
+        data() {
+          return {
+            message: '我是子A'
+          }
+        },
+        props: { fatherMessage: String },
+        emits: ['update:fatherMessage'],
+        template: `
+        <input
+          type="text"
+          :value="fatherMessage"
+          @input="$emit('update:fatherMessage', $event.target.value)"
+        >
+        <div>{{message}}</div>
+        <div>{{fatherMessage}}</div>
+          `
+
+        //方法
+      }
+      const app = Vue.createApp({
+        data() {
+          return {
+            message1: '我是父'
+          }
+        },
+
+        //添加一个局部组件
+        components: {
+          'html-a': htmlA
+        }
+      })
+
+      app.mount('#app')
+    </script>
+  </body>
+</html>

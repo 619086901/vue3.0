@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="../js/vue.global.js"></script>
+  </head>
+  <body>
+    <a href="https://v3.cn.vuejs.org/guide/events.html#%E6%8C%89%E9%94%AE%E4%BF%AE%E9%A5%B0%E7%AC%A6">按键修饰符</a><br>
+    </div>
+    <div id="app">
+      <!-- 点击事件将只会触发一次 -->
+      <button @click.once="doThis">我怎么知道</button>
+
+      <!-- 阻止单击事件向上传播 -->
+      <!-- 假如body有个单击事件打印数字，不加stop单击就会打印出来-->
+      <button @click.stop="doThis">haha</button><br />
+
+      <!-- 拦截默认事件 -->
+      <a @click.prevent="onSubmit" href="http://www.baidu.com"
+        >修饰符阻止默认事件</a
+      ><br />
+      <a @click="haha" href="https://www.baidu.com/">事件阻止默认事件</a>
+    </div>
+
+    <script>
+      const app = Vue.createApp({
+        data() {
+          return {}
+        },
+        methods: {
+          onSubmit(event) {
+            console.log(event)
+          },
+          haha(event) {
+            event.preventDefault()
+          },
+          doThis(){
+            console.log('3')
+          }
+        }
+      }).mount('#app')
+    </script>
+  </body>
+</html>

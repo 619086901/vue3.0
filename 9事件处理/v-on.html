@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="../js/vue.global.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <button type="submit" @click="onClick('fanjianfeng',$event)">
+        点我看console</button
+      ><br />
+      <button type="submit" @click="onClick2">点我看console</button><br />
+      <button @click="one(),two()">点我看console</button><br />
+    </div>
+    <script>
+      const app = Vue.createApp({
+        data() {
+          return {}
+        },
+        methods: {
+          onClick(name, event) {
+            console.log(name)
+            console.log(event)
+            event.preventDefault() //阻止默认动作，阻止提交
+          },
+          onClick2(event) {
+            //event可以访问原生事件
+            console.log(event)
+          },
+          one() {
+            console.log('one')
+          },
+          two() {
+            console.log('two')
+          }
+        }
+      }).mount('#app')
+    </script>
+  </body>
+</html>

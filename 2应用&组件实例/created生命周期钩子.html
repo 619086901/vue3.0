@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="../js/vue.global.js"></script>
+  </head>
+  <body>
+    <div id="counter">createApp创建一个新的应用实例 <br />{{count}}</div>
+
+    <script>
+      //创建
+      const app = Vue.createApp({
+        data() {
+          return {
+            count: 1
+          }
+        },
+
+        created() {
+          //可以用来在一个实例被创建之后执行代码
+          console.log(this.count)
+
+          //DOM无法获取 getElementById
+        },
+        mounted() {
+          //实例被挂载后调用
+          //可以操作DOM
+        },
+        updated() {
+          //DOM被修改后执行
+          //修改下count会执行
+          console.log('数据被改了')
+        },
+        unmounted() {
+          //卸载组件实例后调用
+          //移除组件时，取消定时器
+        }
+      })
+
+      //挂载  这是根组件实例
+      const vm = app.mount('#counter')
+    </script>
+  </body>
+</html>

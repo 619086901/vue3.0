@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="../js/vue.global.js"></script>
+  </head>
+  <body>
+    <div id="counter">
+      <!--声明式渲染-->
+      <span v-bind:title="message1"> {{counter}}</span><br />
+
+      <!--处理用户输入-->
+      <button v-on:click="onClick">{{message1}}</button>
+      <p>{{message2}}</p>
+      <input v-model="message2" /><br />
+
+      <!--条件与循环-->
+      <span v-if="seen">if控制是否成功执行</span>
+      <ol>
+        <li v-for="item in todos">{{item.text}}</li>
+      </ol>
+      <!--组件化应用构建-->
+    </div>
+
+    <div id="counter2">
+      <todo-item
+        v-for="item in groceryList"
+        v-bind:todo="item"
+        v-bind:key="item.id"
+      >
+      </todo-item>
+    </div>
+    <script>
+      const Counter = {
+        data() {
+          return {
+            counter: 0,
+            message1: 'Hello world' + new Date().toLocaleString(),
+            message2: 'v-model 表单输入与应用状态之间双向绑定',
+            seen: true,
+            todos: [
+              { text: '我是text1', id: 1 },
+              { text: '我是text2', id: 2 },
+              { text: '我是text3', id: 3 }
+            ]
+          }
+        },
+        mounted() {
+          setInterval(() => {
+            this.counter++
+          }, 1000)
+        },
+        methods: {
+          onClick() {
+            this.message1 = this.message1.split('').reverse().join('')
+          }
+        }
+      }
+      Vue.createApp(Counter).mount('#counter')
+
+      //组件化应用构建
+      const Counter2 = {
+        data() {
+          return {
+            groceryList: [
+              { id: 0, text: 'Vegetables' },
+              { id: 1, text: 'Cheese' },
+              { id: 2, text: 'Whatever else humans are supposed to eat' }
+            ]
+          }
+        }
+      }
+      const app2 = Vue.createApp(Counter2)
+      app2.component('todo-item', {
+        props: ['todo'],
+        template: `<li>{{ todo.text }}</li>`
+      })
+      app2.mount('#counter2')
+    </script>
+  </body>
+</html>

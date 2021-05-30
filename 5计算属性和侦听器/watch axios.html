@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="../js/vue.global.js"></script>
+    <script src="../js/axios.min.js"></script>
+  </head>
+  <body>
+    <div id="watch-example">
+      <p>
+        Ask a yes/no question:
+        <!--v-model表单输入与应用双向绑定-->
+        <input v-model="question" />
+      </p>
+      <p>{{ answer }}</p>
+    </div>
+    <script>
+      const watch = Vue.createApp({
+        data() {
+          let question = ''
+          let answer = '问题后+个?'
+          return {
+            question,
+            answer
+          }
+        },
+        //
+        watch: {
+          question(newQuestion, oldQuestion) {
+            if (newQuestion.indexOf('?') > -1) {
+              this.getAnswer()
+            }
+          }
+        },
+        methods: {
+          getAnswer() {
+            this.answer = '思考'
+            axios
+              .get('https://yesno.wtf/api')
+              .then((response) => {
+                this.answer = response.data.answer
+              })
+              .catch((err) => {
+                this.answer = err
+              })
+          }
+        }
+      }).mount('#watch-example')
+    </script>
+  </body>
+</html>

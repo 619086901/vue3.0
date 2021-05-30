@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="../js/vue.global.js"></script>
+    <script src="../js/lodash.min.js"></script>
+  </head>
+  <body>
+
+    <div id="app"></div>
+    <script>
+      const app = Vue.createApp({
+        data() {
+          let count = 4
+          return {
+            count
+          }
+        },
+        methods: {
+          //包含所需方法的对象
+          increment() {
+            //this指向组件实例
+            //避免使用箭头函数
+            this.count++
+          }
+        }
+      })
+
+      const vm = app.mount('#app')
+      console.log(vm.$data)
+      console.log(vm.$data.count) //4
+      console.log(vm.count) //4
+
+      vm.count = 5
+      console.log(vm)
+      console.log(vm.$data) //5
+
+      vm.increment()
+      console.log(vm.$data) //6
+
+    </script>
+  </body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="../js/vue.global.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <div class="class1" :class="{ class2: isActive }"></div>
+      <!--模板-->
+      <div :class="classObject"></div>
+      <!--数组-->
+      <div :class="[array1,array2]"></div>
+
+      <!--v-bind:style-->
+      <div :style="{ color: activeColor, fontSize: fontSize + 'px' }"></div>
+      <!--模板-->
+      <div :style="styleObject"></div:style>
+    </div>
+    <script>
+      const app = Vue.createApp({
+        data() {
+          const styleObject={
+            color:'red',
+            fontSize:'12px'
+         }
+          return {
+            isActive: true,
+            array1: 'class1',
+            array2: 'class2',
+
+            //style
+            activeColor: 'red',
+            fontSize: 30,
+            styleObject
+          }
+        },
+        computed: {
+          classObject() {
+            return {
+              class1: this.isActive
+            }
+          }
+        }
+      }).mount('#app')
+    </script>
+  </body>
+</html>

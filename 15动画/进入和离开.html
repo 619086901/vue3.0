@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="../js/vue.global.js"></script>
+  </head>
+  <style>
+    /*定义进入过渡生效时的状态*/
+    .fade-enter-active {
+      transition: opacity 5s ease;
+    }
+    /*定义离开过渡生效时的状态*/
+    .fade-leave-active {
+      transition: opacity 5s ease;
+    }
+    /*定义离开过渡的开始状态*/
+    .fade-leave-from {
+      opacity: 100;
+    }
+
+    /*定义离开过渡的结束状态*/
+    .fade-leave-to {
+      opacity: 0;
+    }
+
+    /*定义进入过渡的开始状态*/
+    .fade-enter-from {
+      opacity: 0;
+    }
+    /*定义进入过渡的结束状态*/
+    .fade-enter-to {
+      opacity: 100;
+    }
+  </style>
+  <body>
+    <div id="demo">
+      <button @click="show = !show">Toggle</button>
+
+      <transition name="fade">
+        <p v-if="show">hello</p>
+      </transition>
+    </div>
+    <script>
+      const app = {
+        data() {
+          return {
+            show: true
+          }
+        }
+      }
+      Vue.createApp(app).mount('#demo')
+    </script>
+  </body>
+</html>

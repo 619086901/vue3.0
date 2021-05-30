@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="../js/vue.global.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <!--传递父组件 props通信-->
+      <html-a
+        v-bind:father-message="message1"
+        v-on:child-event="parentFn"
+      ></html-a>
+      <br />-------
+      <html-b v-bind:father-message="message1"></html-b>
+    </div>
+
+    <script>
+      //定义局部组件
+      const htmlA = {
+        data() {
+          return {
+            message: '我是子A'
+          }
+        },
+        //props用驼峰命名法
+        props: ['fatherMessage'],
+        //名称使用 kebab-case
+        //emits: ['child-event'],
+        emits: ['child-event'],
+        template: `
+            <div>{{fatherMessage}}</div>
+            <div>{{message}}</div>
+            <button v-on:click="onClick">{{message}}</button>
+            `,
+        //方法
+        methods: {
+          onClick() {
+            //console.log(this.message) //我是子A
+            //触发child-event
+            this.$emit('child-event', this.message)
+          }
+        }
+      }
+      //定义局部组件
+      const htmlB = {
+        data() {
+          return {
+            message: '我是子B'
+          }
+        },
+        //props用驼峰命名法
+        props: ['fatherMessage'],
+        template: `
+            <div>{{fatherMessage}}</div>
+            <div>{{message}}</div>
+            `
+      }
+      const app = Vue.createApp({
+        data() {
+          return {
+            message1: '我是父'
+          }
+        },
+        methods: {
+          parentFn(value) {
+            //console.log(value) //我是子A
+            this.message1 = value //更改父组件
+          }
+        },
+
+        //添加一个局部组件
+        components: {
+          'html-a': htmlA,
+          'html-b': htmlB
+        }
+      })
+
+      app.mount('#app')
+    </script>
+  </body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="../js/vue.global.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <div id="app">
+        <button @click="onClick">{{user}}</button><br />
+        <button @click="unclick">停止监听user</button>
+      </div>
+    </div>
+    <script>
+      const app = Vue.createApp({
+        data() {
+          return {
+            user: 1,
+            xinxi: {
+              name: 'fan',
+              age: 20
+            }
+          }
+        },
+        methods: {
+          onClick() {
+            this.user++
+            this.xinxi.age++
+          },
+          unclick() {
+            unwatch()
+          }
+        },
+        created() {
+          // this.$watch('user', (xin, jiu) => {
+          //   console.log(`新的值${xin}`)
+          //   console.log(`旧的值${jiu}`)
+          // })
+
+          //直接computed计算然后监听
+          this.$watch(
+            'xinxi',
+            (obj) => {
+              console.log(obj) //Proxy {name: "fan", age: 21}
+              console.log(obj.age)
+            },
+            {
+              deep: true, //开启深度监听
+              immediate: true //将立即以表达式的当前值触发回调
+            }
+          )
+        }
+      }).mount('#app')
+
+      const unwatch = app.$watch('user', (xin, jiu) => {
+        console.log(`新的值${xin}`)
+        console.log(`旧的值${jiu}`)
+      })
+      //$watch 返回一个取消侦听函数，用来停止触发回调：
+    </script>
+  </body>
+</html>

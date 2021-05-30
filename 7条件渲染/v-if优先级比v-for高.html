@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="../js/vue.global.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <template v-if="awesome">
+        <h1>我是区域1</h1>
+      </template>
+      <template v-else>
+        <h1>我是区域2</h1>
+      </template>
+
+      <button @click="onClick">点我</button>
+    </div>
+
+    <script>
+      const app = Vue.createApp({
+        data() {
+          return {
+            awesome: true
+          }
+        },
+        methods: {
+          onClick() {
+            this.awesome = !this.awesome
+          }
+        }
+      }).mount('#app')
+    </script>
+  </body>
+</html>

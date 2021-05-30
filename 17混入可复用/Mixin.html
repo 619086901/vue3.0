@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="../js/vue.global.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <p></p>
+    </div>
+    <script>
+      const myMixin = {
+        methods: {
+          foo() {
+            console.log('foo')
+          },
+          conflicting() {
+            console.log('from mixin')
+          }
+        }
+      }
+      const app = Vue.createApp({
+        mixins: [myMixin],
+        methods: {
+          bar() {
+            console.log('bar')
+          },
+          conflicting() {
+            console.log('from self')
+          }
+        }
+      })
+      const vm = app.mount('#app')
+
+      //值为对象的选项，
+      //例如 methods、components 和 directives，将被合并为同一个对象。
+      //两个对象键名冲突时，取组件对象的键值对。
+      vm.foo() // => "foo"
+      vm.bar() // => "bar"
+      vm.conflicting() // => "from self"
+    </script>
+  </body>
+</html>

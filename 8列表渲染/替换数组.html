@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="../js/vue.global.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <ul v-for="item in items">
+        <li>{{item.name}}</li>
+        <li>{{item.age}}</li>
+      </ul>
+      <button @click="onClick">点我</button>
+    </div>
+    <script>
+      const app = Vue.createApp({
+        data() {
+          return {
+            items: [
+              {
+                name: 'aafn',
+                age: 20
+              },
+              {
+                name: 'jian',
+                age: 20
+              }
+            ]
+          }
+        },
+        methods: {
+          onClick() {
+            console.log(this.items)
+            this.items = this.items.filter((item) => item.name.match(/f/)) //保留name中有f字母的
+          }
+        }
+      }).mount('#app')
+    </script>
+  </body>
+</html>

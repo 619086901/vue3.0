@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="../js/vue.global.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <p>slot :item="item"我将发送到v-slot:default="slotProps"中去</p>
+      <p>通过slotProps.item访问子组件中的items</p>
+      <todo-list>
+        <template v-slot:default="slotProps">
+          <i class="fas fa-check"></i>
+          <span class="green">{{ slotProps.item }}</span>
+        </template>
+      </todo-list>
+
+      <!--解构语法-->
+      <todo-list>
+        <template v-slot:default="{item:todo}">
+          <i class="fas fa-check"></i>
+          <span class="green">{{ todo }}</span>
+        </template>
+      </todo-list>
+    </div>
+    <script>
+      const app = Vue.createApp({
+        data() {
+          return {}
+        },
+        components: {}
+      })
+      app
+        .component('todo-list', {
+          data() {
+            return {
+              items: ['Feed a cat', 'Buy milk']
+            }
+          },
+          template: `
+            <ul>
+              <li v-for="(item, index) in items">
+                <slot :item="item"></slot>
+              </li>
+            </ul>
+            `
+        })
+        .mount('#app')
+    </script>
+  </body>
+</html>

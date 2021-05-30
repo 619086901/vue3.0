@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="../js/vue.global.js"></script>
+  </head>
+  <body>
+    <div id="dynamic-component-demo" class="demo">
+      <button
+        v-for="tab in tabs"
+        v-bind:key="tab"
+        v-bind:class="['tab-button', { active: currentTab === tab }]"
+        v-on:click="currentTab = tab"
+      >
+        {{ tab }}
+      </button>
+
+      <component v-bind:is="currentTabComponent" class="tab"></component>
+    </div>
+    <script>
+      const app = Vue.createApp({
+        data() {
+          return {
+            currentTab: 'Home',
+            tabs: ['Home', 'Posts', 'Archive']
+          }
+        },
+        computed: {
+          currentTabComponent() {
+            //toLowerCase()字符串值转为小写形式
+            console.log(this.currentTab)
+            return 'tab-' + this.currentTab.toLowerCase()
+          }
+        }
+      })
+
+      app.component('tab-home', {
+        props: ['is'],
+        template: `<div class="demo-tab">{{is}} 组件</div>`
+      })
+      app.component('tab-posts', {
+        template: `<div class="demo-tab">Posts 组件</div>`
+      })
+      app.component('tab-archive', {
+        template: `<div class="demo-tab">Archive 组件</div>`
+      })
+
+      app.mount('#dynamic-component-demo')
+    </script>
+  </body>
+</html>
